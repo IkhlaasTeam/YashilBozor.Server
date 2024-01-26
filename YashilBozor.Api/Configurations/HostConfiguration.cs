@@ -24,7 +24,7 @@ public static partial class HostConfiguration
         app
             .UseCors();
         app
-            //.UseCustomMiddleWare()
+            .UseCustomMiddleWare()
             .UseExposers()
             .UseDevTools();
         

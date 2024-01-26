@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
+using YashilBozor.Api.Middlewares;
 using YashilBozor.Api.Models;
 using YashilBozor.DAL.DbContexts;
 using YashilBozor.Service.Commons.Settings;
@@ -138,9 +139,9 @@ public static partial class HostConfiguration
         return app;
     }
 
-    //private static WebApplication UseCustomMiddleWare(this WebApplication app)
-    //{
-    //    app.UseMiddleware<ExceptionHandlerMiddleWare>();
-    //    return app;
-    //}
+    private static WebApplication UseCustomMiddleWare(this WebApplication app)
+    {
+        app.UseMiddleware<ExceptionHandlerMiddleWare>();
+        return app;
+    }
 }
