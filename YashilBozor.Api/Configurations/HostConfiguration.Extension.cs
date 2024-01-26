@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
@@ -32,7 +33,7 @@ public static partial class HostConfiguration
 
     private static WebApplicationBuilder AddBusinessLogic(this WebApplicationBuilder builder)
     {
-        var connection = builder.Configuration.GetConnectionString("ConnectionStrings");
+        var s = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         
@@ -43,7 +44,12 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        builder.Services.AddControllers().AddNewtonsoftJson();
+        
+        builder.Services.AddControllers().AddNewtonsoftJson();//options =>
+        //{
+        //    options.Conventions.Add(new RouteTokenTransformerConvention(
+        //                                        new ConfigurationApiUrlName()));
+        //}
 
         return builder;
     }
