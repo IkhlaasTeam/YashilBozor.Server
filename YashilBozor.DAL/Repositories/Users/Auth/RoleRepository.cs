@@ -1,13 +1,13 @@
-﻿using HHD.DAL.DbContexts;
-using HHD.DAL.IRepositories.Users.Auth;
-using HHD.Domain.Entities.Users.Auth;
+using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.IRepositories.Users.Auth;
 using YashilBozor.DAL.Repositories.Common;
+using YashilBozor.Domain.Entities.Users.Auth;
 
 namespace YashilBozor.DAL.Repositories.Users.Auth;
 
 public class RoleRepository : Repository<Role>, IRoleRepository
 {
-    public RoleRepository(HHDDbContext dbContext) : base(dbContext)
+    public RoleRepository(AppDbContext dbContext) : base(dbContext)
     {
 
     }
