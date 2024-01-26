@@ -3,6 +3,6 @@ using YashilBozor.Domain.Entities.Users;
 
 namespace YashilBozor.DAL.IRepositories.Users;
 
-public interface IUserCredentialsRepository : IRepository<UserCredentials>
+public interface IUserCredentialsRepository : IRepository<UserCreadentials>
 {
 }

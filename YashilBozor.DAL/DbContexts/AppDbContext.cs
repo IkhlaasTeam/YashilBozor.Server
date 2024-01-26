@@ -18,7 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<AccessToken> AccessTokens { get; set; }
     public DbSet<Category> ProductCategories { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<UserCredentials> UserCredentials { get; set; }
+    public DbSet<UserCreadentials> UserCredentials { get; set; }
     public DbSet<VerificationCode> VerificationCodes { get; set; }
     public DbSet<UserInfoVerificationCode> UserInfoVerificationCodes { get; set; }
 
