@@ -1,6 +1,6 @@
 ﻿using YashilBozor.Domain.Enums;
 
-namespace YashilBozor.Service.Interfaces;
+namespace YashilBozor.Service.Interfaces.Verifications;
 
 public interface IVerificationCodeService
 {

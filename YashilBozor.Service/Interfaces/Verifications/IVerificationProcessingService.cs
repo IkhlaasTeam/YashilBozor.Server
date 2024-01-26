@@ -1,4 +1,4 @@
-﻿namespace YashilBozor.Service.Interfaces;
+﻿namespace YashilBozor.Service.Interfaces.Verifications;
 
 public interface IVerificationProcessingService
 {

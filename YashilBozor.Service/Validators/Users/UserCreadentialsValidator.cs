@@ -5,7 +5,7 @@ using YashilBozor.Service.Commons.Settings;
 
 namespace YashilBozor.Service.Validators.Users;
 
-public class UserCreadentialsValidator : AbstractValidator<UserCredentials>
+public class UserCreadentialsValidator : AbstractValidator<UserCreadentials>
 {
     public UserCreadentialsValidator(IOptions<ValidationSettings> validationSettings)
     {

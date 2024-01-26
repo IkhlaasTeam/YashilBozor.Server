@@ -6,9 +6,9 @@ using YashilBozor.DAL.IRepositories.Users;
 using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Domain.Enums;
 using YashilBozor.Service.Commons.Settings;
-using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Interfaces.Verifications;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Verifications;
 
 public class UserInfoVerificationCodeService(
     IOptions<VerificationSettings> verificationSettings,

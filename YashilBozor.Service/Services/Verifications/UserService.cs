@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using YashilBozor.DAL.IRepositories.Users;
 using YashilBozor.Domain.Entities.Users;
-using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Interfaces.Identity;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Verifications;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {
