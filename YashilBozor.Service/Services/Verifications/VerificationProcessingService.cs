@@ -1,7 +1,8 @@
 ﻿using YashilBozor.Domain.Enums;
-using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Interfaces.Identity;
+using YashilBozor.Service.Interfaces.Verifications;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Verifications;
 
 public class VerificationProcessingService(IUserInfoVerificationCodeService userInfoVerificationCodeService, IUserService userService)
     : IVerificationProcessingService

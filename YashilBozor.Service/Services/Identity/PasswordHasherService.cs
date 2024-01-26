@@ -1,7 +1,7 @@
-﻿using YashilBozor.Service.Interfaces;
+﻿using YashilBozor.Service.Interfaces.Identity;
 using BC = BCrypt.Net.BCrypt;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Identity;
 
 public class PasswordHasherService : IPasswordHasherService
 {

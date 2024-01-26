@@ -1,4 +1,4 @@
-﻿namespace YashilBozor.Service.Interfaces;
+﻿namespace YashilBozor.Service.Interfaces.Identity;
 
 public interface IPasswordHasherService
 {

@@ -1,6 +1,6 @@
 ﻿using YashilBozor.Domain.Entities.Users;
 
-namespace YashilBozor.Service.Interfaces;
+namespace YashilBozor.Service.Interfaces.Identity;
 
 public interface IAccessTokenService
 {

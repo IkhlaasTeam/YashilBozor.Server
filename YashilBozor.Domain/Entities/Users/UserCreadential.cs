@@ -2,7 +2,7 @@
 
 namespace YashilBozor.Domain.Entities.Users;
 
-public class UserCredentials : Auditable
+public class UserCreadentials : Auditable
 {
     public string Password { get; set; }
 

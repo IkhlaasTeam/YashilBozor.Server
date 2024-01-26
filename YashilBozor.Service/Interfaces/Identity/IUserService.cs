@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using YashilBozor.Domain.Entities.Users;
 
-namespace YashilBozor.Service.Interfaces;
+namespace YashilBozor.Service.Interfaces.Identity;
 
 public interface IUserService
 {
@@ -11,7 +11,7 @@ public interface IUserService
 
     //ValueTask<User> GetSystemUserAsync(bool asNoTracking = false, CancellationToken cancellationToken = default);
 
-    //Task<Guid?> GetIdByEmailAddressAsync(string emailAddress, CancellationToken cancellationToken = default);
+    Task<Guid?> GetIdByEmailAddressAsync(string emailAddress, CancellationToken cancellationToken = default);
 
     ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 

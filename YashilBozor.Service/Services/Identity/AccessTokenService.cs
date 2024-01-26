@@ -1,8 +1,8 @@
 ﻿using YashilBozor.DAL.IRepositories.Users;
 using YashilBozor.Domain.Entities.Users;
-using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Interfaces.Identity;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Identity;
 
 public class AccessTokenService(IAccessTokenRepository accessTokenRepository) : IAccessTokenService
 {

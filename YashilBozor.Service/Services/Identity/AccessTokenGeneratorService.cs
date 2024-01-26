@@ -6,9 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Service.Commons.Settings;
 using YashilBozor.Service.Constants;
-using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Interfaces.Identity;
 
-namespace YashilBozor.Service.Services;
+namespace YashilBozor.Service.Services.Identity;
 
 public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IAccessTokenGeneratorService
 {
@@ -68,4 +68,3 @@ public class AccessTokenGeneratorService(IOptions<JwtSettings> jwtSettings) : IA
         };
     }
 }
-   

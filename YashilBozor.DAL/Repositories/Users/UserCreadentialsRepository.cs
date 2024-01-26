@@ -5,9 +5,9 @@ using YashilBozor.Domain.Entities.Users;
 
 namespace YashilBozor.DAL.Repositories.Users;
 
-public class UserCredentialsRepository : Repository<UserCredentials>, IUserCredentialsRepository
+public class UserCreadentialsRepository : Repository<UserCreadentials>, IUserCredentialsRepository
 {
-    public UserCredentialsRepository(AppDbContext dbContext) : base(dbContext)
+    public UserCreadentialsRepository(AppDbContext dbContext) : base(dbContext)
     {
 
     }

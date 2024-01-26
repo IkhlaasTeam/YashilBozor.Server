@@ -1,7 +1,7 @@
 ﻿using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Domain.Enums;
 
-namespace YashilBozor.Service.Interfaces;
+namespace YashilBozor.Service.Interfaces.Verifications;
 
 public interface IUserInfoVerificationCodeService : IVerificationCodeService
 {
