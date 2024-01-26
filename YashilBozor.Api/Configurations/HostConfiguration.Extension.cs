@@ -6,8 +6,8 @@ using Serilog;
 using System.Reflection;
 using YashilBozor.DAL.DbContexts;
 using YashilBozor.Service.Commons.Settings;
-using YashilBozor.Service.Interfaces;
-using YashilBozor.Service.Services;
+using YashilBozor.Service.Interfaces.Identity;
+using YashilBozor.Service.Services.Identity;
 
 namespace HHD.API.Configurations;
 
@@ -28,6 +28,14 @@ public static partial class HostConfiguration
         //validating
         builder.Services
             .Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
+        //verification
+        builder.Services
+            .Configure<VerificationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
+        //identity
+        builder.Services
+            .Configure<JwtSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
 
         return builder;
     }
