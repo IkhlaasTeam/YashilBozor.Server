@@ -10,6 +10,7 @@ public class User : Auditable
     public string LastName { get; set; }
     public string EmailAddress { get; set; }
     public string PhoneNumber { get; set; }
+    public bool IsEmailAddressVerified { get; set; }
 
     public IEnumerable<UserRole> UserRoles { get; set; }
     public IEnumerable<Order> Orders { get; set; }
