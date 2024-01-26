@@ -1,6 +1,6 @@
-﻿using HHD.Domain.Enums;
-using YashilBozor.Domain.Entities.Commons;
+﻿using YashilBozor.Domain.Entities.Commons;
 using YashilBozor.Domain.Entities.Users;
+using YashilBozor.Domain.Enums;
 
 namespace YashilBozor.Domain.Entities.Categories;
 
