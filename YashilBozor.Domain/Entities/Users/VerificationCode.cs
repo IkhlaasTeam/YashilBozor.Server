@@ -1,4 +1,5 @@
 ﻿using YashilBozor.Domain.Entities.Commons;
+using YashilBozor.Domain.Enums;
 
 namespace YashilBozor.Domain.Entities.Users;
 

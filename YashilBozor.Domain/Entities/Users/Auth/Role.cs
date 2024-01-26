@@ -1,6 +1,6 @@
-﻿using HHD.Domain.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using YashilBozor.Domain.Entities.Commons;
+using YashilBozor.Domain.Enums;
 
 namespace YashilBozor.Domain.Entities.Users.Auth;
 
