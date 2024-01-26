@@ -1,10 +1,10 @@
 ﻿using HHD.DAL.DbContexts;
 using HHD.DAL.IRepositories.Users;
-using HHD.DAL.Repositories.Common;
 using HHD.Domain.Entities.Users;
 using System.Linq.Expressions;
+using YashilBozor.DAL.Repositories.Common;
 
-namespace HHD.DAL.Repositories.Users;
+namespace YashilBozor.DAL.Repositories.Users;
 
 public class UserRepository : Repository<User>, IUserRepository
 {

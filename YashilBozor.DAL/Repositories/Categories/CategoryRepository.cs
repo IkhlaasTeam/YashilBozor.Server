@@ -1,9 +1,9 @@
 ﻿using HHD.DAL.DbContexts;
 using HHD.DAL.IRepositories.Categories;
-using HHD.DAL.Repositories.Common;
 using HHD.Domain.Entities.Categories;
+using YashilBozor.DAL.Repositories.Common;
 
-namespace HHD.DAL.Repositories.Categories;
+namespace YashilBozor.DAL.Repositories.Categories;
 
 public class CategoryRepository : Repository<Category>, ICategoryRepository
 {

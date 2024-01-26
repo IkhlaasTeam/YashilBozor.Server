@@ -3,7 +3,7 @@ using HHD.DAL.IRepositories.Commons;
 using HHD.Domain.Entities.Commons;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-namespace HHD.DAL.Repositories.Common;
+namespace YashilBozor.DAL.Repositories.Common;
 
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditable

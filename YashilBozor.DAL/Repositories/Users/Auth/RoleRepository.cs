@@ -1,9 +1,9 @@
 ﻿using HHD.DAL.DbContexts;
 using HHD.DAL.IRepositories.Users.Auth;
-using HHD.DAL.Repositories.Common;
 using HHD.Domain.Entities.Users.Auth;
+using YashilBozor.DAL.Repositories.Common;
 
-namespace HHD.DAL.Repositories.Users.Auth;
+namespace YashilBozor.DAL.Repositories.Users.Auth;
 
 public class RoleRepository : Repository<Role>, IRoleRepository
 {
