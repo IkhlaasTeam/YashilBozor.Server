@@ -1,13 +1,13 @@
-﻿using HHD.DAL.DbContexts;
-using HHD.DAL.IRepositories.Users;
-using HHD.DAL.Repositories.Common;
-using HHD.Domain.Entities.Users;
+﻿using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.IRepositories.Users;
+using YashilBozor.DAL.Repositories.Common;
+using YashilBozor.Domain.Entities.Users;
 
-namespace HHD.DAL.Repositories.Users;
+namespace YashilBozor.DAL.Repositories.Users;
 
 public class UserInfoVerificationCodeRepository : Repository<UserInfoVerificationCode>, IUserInfoVerificationCodeRepository
 {
-    public UserInfoVerificationCodeRepository(HHDDbContext dbContext) : base(dbContext)
+    public UserInfoVerificationCodeRepository(AppDbContext dbContext) : base(dbContext)
     {
 
     }

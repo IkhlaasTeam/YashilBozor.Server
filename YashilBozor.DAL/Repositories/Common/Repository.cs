@@ -1,16 +1,16 @@
-﻿using HHD.DAL.DbContexts;
-using HHD.DAL.IRepositories.Commons;
-using HHD.Domain.Entities.Commons;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-namespace HHD.DAL.Repositories.Common;
+using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.IRepositories.Commons;
+using YashilBozor.Domain.Entities.Commons;
+namespace YashilBozor.DAL.Repositories.Common;
 
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditable
 {
-    private readonly HHDDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public Repository(HHDDbContext dbContext)
+    public Repository(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
