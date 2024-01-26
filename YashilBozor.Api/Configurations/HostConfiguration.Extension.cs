@@ -1,9 +1,13 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
 using YashilBozor.DAL.DbContexts;
+using YashilBozor.Service.Commons.Settings;
+using YashilBozor.Service.Interfaces;
+using YashilBozor.Service.Services;
 
 namespace HHD.API.Configurations;
 
@@ -21,6 +25,10 @@ public static partial class HostConfiguration
     {
         builder.Services.AddValidatorsFromAssemblies(Assemblies);
 
+        //validating
+        builder.Services
+            .Configure<ValidationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+
         return builder;
     }
 
@@ -36,6 +44,9 @@ public static partial class HostConfiguration
         var s = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+        //Identity
+        builder.Services
+            .AddScoped<IPasswordHasherService, PasswordHasherService>();
         
 
         return builder;

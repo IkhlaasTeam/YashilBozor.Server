@@ -1,4 +1,4 @@
-﻿using HHD.Domain.Enums;
+﻿using YashilBozor.Domain.Enums;
 
 namespace YashilBozor.Service.DTOs.Categories.Orders;
 
