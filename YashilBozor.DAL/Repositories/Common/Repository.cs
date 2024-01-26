@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using YashilBozor.DAL.DbContexts;
 using YashilBozor.DAL.IRepositories.Commons;

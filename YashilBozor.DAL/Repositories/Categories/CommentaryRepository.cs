@@ -1,4 +1,4 @@
-﻿using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.DbContexts;
 using YashilBozor.DAL.IRepositories.Categories;
 using YashilBozor.DAL.Repositories.Common;
 using YashilBozor.Domain.Entities.Categories;
