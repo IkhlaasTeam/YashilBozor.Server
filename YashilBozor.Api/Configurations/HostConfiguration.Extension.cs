@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
+using YashilBozor.Api.Models;
 using YashilBozor.DAL.DbContexts;
 using YashilBozor.Service.Commons.Settings;
 using YashilBozor.Service.Interfaces;
@@ -104,7 +105,16 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    private static WebApplicationBuilder AddConfigurationApiUrlName(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers(options =>
+        {
+            options.Conventions.Add(new RouteTokenTransformerConvention(
+                                                new ConfigurationApiUrlName()));
+        });
 
+        return builder;
+    }
     private static WebApplication UseExposers(this WebApplication app)
     {
         app.MapControllers();

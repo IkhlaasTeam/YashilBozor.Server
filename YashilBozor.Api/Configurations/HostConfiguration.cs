@@ -11,7 +11,8 @@ public static partial class HostConfiguration
             .AddBusinessLogic()
             .AddExposers()
             .AddCors()
-            .AddDevTools();
+            .AddDevTools()
+            .AddConfigurationApiUrlName();
 
         return new(builder);
     }
