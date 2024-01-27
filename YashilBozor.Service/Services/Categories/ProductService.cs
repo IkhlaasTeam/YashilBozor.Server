@@ -5,7 +5,9 @@ using YashilBozor.DAL.IRepositories.Categories;
 using YashilBozor.DAL.Repositories.Categories;
 using YashilBozor.Domain.Configurations;
 using YashilBozor.Domain.Entities.Categories;
+using YashilBozor.Service.DTOs.Categories;
 using YashilBozor.Service.DTOs.Categories.Products;
+using YashilBozor.Service.Exceptions;
 using YashilBozor.Service.Interfaces.Categories;
 using YashilBozor.Service.Validators.Categories;
 
@@ -21,6 +23,10 @@ public class ProductService
         bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
+        var dto = productRepository.SelectAll(p => p.Name == productForCreationDto.Name && p.DeletedAt == null);
+        if (dto is not null)
+            throw new CustomException(409, "Product is already exist");
+
         var product = mapper.Map<Product>(productForCreationDto);
         var validationResult = productValidate.Validate(product);
 
@@ -36,6 +42,11 @@ public class ProductService
         bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
+        var dto = await productRepository.SelectByIdAsync(productId);
+
+        if (dto.DeletedAt is null)
+            throw new CustomException(400, "Product is not found");
+
         return mapper.Map<ProductForResultDto>(await productRepository
             .DeleteAsync(productId, saveChanges, cancellationToken));
     }
@@ -60,9 +71,14 @@ public class ProductService
         bool asNoTracking = false,
         CancellationToken cancellationToken = default)
     {
-        return mapper.Map<ProductForResultDto>
-            (await productRepository.SelectByIdAsync
-            (productId, asNoTracking, cancellationToken));
+        var product = await productRepository.SelectByIdAsync(productId, asNoTracking, cancellationToken);
+
+        if (product != null && product.DeletedAt == null)
+        {
+            return mapper.Map<ProductForResultDto>(product);
+        }
+
+        throw new CustomException(400, "Product is not found");
     }
 
     public async ValueTask<ProductForResultDto> UpdateAsync
@@ -70,6 +86,11 @@ public class ProductService
         Guid productId, bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
+        var dto = await productRepository.SelectByIdAsync(productId);
+
+        if (dto.DeletedAt is not null)
+            throw new CustomException(400, "Product is not found");
+
         var product = mapper.Map<Product>(productForUpdateDto);
         product.Id = productId;
 

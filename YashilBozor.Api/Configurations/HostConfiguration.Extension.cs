@@ -68,12 +68,14 @@ public static partial class HostConfiguration
 
         //Services
         builder.Services
-            .AddScoped<ICategoryService, CategoryService>();
+            .AddScoped<ICategoryService, CategoryService>()
+            .AddScoped<IProductService, ProductService>();
 
         //Reposiotories
         builder.Services
             .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-            .AddScoped<ICategoryRepository, CategoryRepository>();
+            .AddScoped<ICategoryRepository, CategoryRepository>()
+            .AddScoped<IProductService, ProductService>();
 
 
 
