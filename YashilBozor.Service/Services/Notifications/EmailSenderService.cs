@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Mail;
 using YashilBozor.Service.Commons.Settings;
 using YashilBozor.Service.Interfaces.Notifications.Services;
-using YashilBozor.Service.Services.Notifications.Models;
+using YashilBozor.Service.Models;
 
-namespace YashilBozor.Service.Services.Notifications.Services;
+namespace YashilBozor.Service.Services.Notifications;
 
 public class EmailSenderService(IOptions<SmtpSettings> options) : IEmailSenderService
 {

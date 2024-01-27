@@ -4,7 +4,9 @@ using YashilBozor.Service.Interfaces.Verifications;
 
 namespace YashilBozor.Service.Services.Verifications;
 
-public class VerificationProcessingService(IUserInfoVerificationCodeService userInfoVerificationCodeService, IUserService userService)
+public class VerificationProcessingService(
+    IUserInfoVerificationCodeService userInfoVerificationCodeService, 
+    IUserService userService)
     : IVerificationProcessingService
 {
     public async ValueTask<bool> Verify(string code, CancellationToken cancellationToken)
@@ -30,14 +32,13 @@ public class VerificationProcessingService(IUserInfoVerificationCodeService user
         var user = await userService.GetByIdAsync(userInfoVerificationCode.Code.UserId, cancellationToken: cancellationToken) ??
                    throw new InvalidOperationException();
 
-        switch (userInfoVerificationCode.Code.CodeType)
-        {
-            case VerificationCodeType.EmailAddressVerification:
-                user.IsEmailAddressVerified = true;
-                await userService.UpdateAsync(user, false, cancellationToken);
-                break;
-            default: throw new NotSupportedException();
-        }
+        //switch (userInfoVerificationCode.Code.CodeType)
+        //{
+        //    case VerificationCodeType.EmailAddressVerification:
+               
+        //        break;
+        //    default: throw new NotSupportedException();
+        //}
 
         await userInfoVerificationCodeService.DeactivateAsync(userInfoVerificationCode.Code.Id, cancellationToken: cancellationToken);
 

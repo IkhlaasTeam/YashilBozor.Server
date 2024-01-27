@@ -89,7 +89,7 @@ public class UserInfoVerificationCodeService(
 
     public async ValueTask DeactivateAsync(Guid codeId, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var verificationCode = await userInfoVerificationCodeRepository.SelectByIdAsync(codeId, cancellationToken: cancellationToken);
+        await userInfoVerificationCodeRepository.DeactivateAsync(codeId, cancellationToken: cancellationToken);
     }
 
 }

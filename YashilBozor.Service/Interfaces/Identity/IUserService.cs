@@ -1,11 +1,16 @@
 ﻿using System.Linq.Expressions;
+using YashilBozor.Domain.Configurations;
 using YashilBozor.Domain.Entities.Users;
+using YashilBozor.Service.DTOs.Users;
 
 namespace YashilBozor.Service.Interfaces.Identity;
 
 public interface IUserService
 {
-    IQueryable<User> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false);
+    ValueTask<IEnumerable<UserForResultDto>> GetAllAsync(
+        PaginationParams @params,
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default);
 
     ValueTask<User?> GetByIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
@@ -15,5 +20,14 @@ public interface IUserService
 
     ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
-    ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<UserForResultDto> UpdateAsync(
+        UserForUpdateDto userForUpdateDto,
+        Guid userId,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default);
+
+    ValueTask<UserForResultDto?> DeleteAsync(
+        Guid userId,
+        bool saveChanges = true,
+        CancellationToken cancellationToken = default);
 }

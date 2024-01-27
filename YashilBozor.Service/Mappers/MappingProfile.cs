@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using YashilBozor.Domain.Entities.Categories;
+using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Service.DTOs.Categories;
 using YashilBozor.Service.DTOs.Categories.Products;
 using YashilBozor.Service.DTOs.Users;
+using YashilBozor.Service.Models;
 namespace YashilBozor.Service.Mappers;
 
 public class MappingProfile : Profile
@@ -13,7 +15,10 @@ public class MappingProfile : Profile
         //Users
         CreateMap<User, UserForUpdateDto>().ReverseMap();
         CreateMap<User, UserForResultDto>().ReverseMap();
-        CreateMap<User, UserForCreationDto>().ReverseMap();
+        CreateMap<User, SignUpDetails>().ReverseMap();
+
+        //Notifications
+        CreateMap<EmailMessage, Email>().ReverseMap();
 
         //Categories
         CreateMap<Category, CategoryForResultDto>().ReverseMap();

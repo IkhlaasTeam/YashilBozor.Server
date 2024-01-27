@@ -1,13 +1,16 @@
-﻿using YashilBozor.Service.Services.Notifications.Models;
+﻿using YashilBozor.Service.Services.Notifications;
 using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Service.Interfaces.Notifications.Services;
 using YashilBozor.Service.Interfaces.Identity;
 using YashilBozor.Service.Exceptions;
+using YashilBozor.Domain.Entities.Users;
+using AutoMapper;
 
-namespace YashilBozor.Service.Services.Notifications.Services;
+namespace YashilBozor.Service.Services.Notifications;
 
 public class EmailManagementService : IEmailManagementService
 {
+    private readonly IMapper _mapper;
     private readonly IEmailTemplateService _emailTemplateService;
     private readonly IEmailPlaceholderService _emailPlaceholderService;
     private readonly IEmailMessageService _emailMessageService;
@@ -16,6 +19,7 @@ public class EmailManagementService : IEmailManagementService
     private readonly IUserService _userService;
 
     public EmailManagementService(
+        IMapper mapper,
         IEmailTemplateService emailTemplateService,
         IEmailPlaceholderService emailPlaceholderService,
         IEmailMessageService emailMessageService,
@@ -24,6 +28,7 @@ public class EmailManagementService : IEmailManagementService
     IUserService userService
     )
     {
+        _mapper = mapper;
         _emailTemplateService = emailTemplateService;
         _emailPlaceholderService = emailPlaceholderService;
         _emailMessageService = emailMessageService;
@@ -32,49 +37,39 @@ public class EmailManagementService : IEmailManagementService
         _userService = userService;
     }
 
-    public async ValueTask<bool> SendEmailAsync(Guid userId, Guid templateId)
+    public async ValueTask<bool> SendEmailAsync(string senderUserEmail, string receieverUserEmail, Guid templateId, string code="")
     {
         Console.WriteLine(templateId);
         var template = await _emailTemplateService.GetByIdAsync(templateId) ?? throw new CustomException(400, "Email template not found");
+
+        var userId = await _userService.GetIdByEmailAddressAsync(receieverUserEmail) ?? throw new CustomException(400, "User not found");
+
         var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template);
 
-        var user = await _userService.GetByIdAsync(userId) ?? throw new CustomException(400, "User not found");
-        
-        var appEmailAddress = "sultonbek.rakhimov@gmail.com";
 
-        var message = await _emailMessageService.ConvertToMessage(placeholders.Item1, placeholders.Item2, appEmailAddress, user.EmailAddress);
+        var message = await _emailMessageService.ConvertToMessage(placeholders.Item1, placeholders.Item2, senderUserEmail, receieverUserEmail);
         var result = await _emailSenderService.SendEmailAsync(message);
-        var email = ToEmail(message);
+        var email = _mapper.Map<Email>(message);
         email.IsSent = result;
         await _emailService.CreateAsync(email);
         return result;
     }
 
-    public async ValueTask<bool> SendEmailAsync(Guid userId, string templateCategory)
+    public async ValueTask<bool> SendEmailAsync(string senderUserEmail, string receieverUserEmail, string templateCategory, string code = "")
     {
         var template = _emailTemplateService.Get(getTemplate => getTemplate.Subject.Equals(templateCategory)).FirstOrDefault() ?? throw new InvalidOperationException();
-        var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template);
 
-        var user = await _userService.GetByIdAsync(userId) ?? throw new InvalidOperationException();
-        var appEmailAddress = "sultonbek.rakhimov@gmail.com";
+        var userId = await _userService.GetIdByEmailAddressAsync(receieverUserEmail) ?? throw new CustomException(400, "User not found");
 
-        var message = await _emailMessageService.ConvertToMessage(placeholders.Item1, placeholders.Item2, appEmailAddress, user.EmailAddress);
+        var placeholders = await _emailPlaceholderService.GetTemplateValues(userId, template, code);
+
+
+        var message = await _emailMessageService.ConvertToMessage(placeholders.Item1, placeholders.Item2, senderUserEmail, receieverUserEmail);
         var result = await _emailSenderService.SendEmailAsync(message);
-        var email = ToEmail(message);
+        var email = _mapper.Map<Email>(message);
         email.IsSent = result;
         await _emailService.CreateAsync(email);
         return result;
     }
 
-    private Email ToEmail(EmailMessage message)
-    {
-        return new Email()
-        {
-            SenderAddress = message.SenderAddress,
-            ReceiverAddress = message.ReceiverAddress,
-            Subject = message.Subject,
-            Body = message.Body,
-            SentTime = message.SentTime
-        };
-    }
 }

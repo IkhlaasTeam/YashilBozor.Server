@@ -5,4 +5,8 @@ namespace YashilBozor.DAL.IRepositories.Users;
 
 public interface IUserInfoVerificationCodeRepository : IRepository<UserInfoVerificationCode>
 {
+    ValueTask DeactivateAsync(
+        Guid codeId, 
+        bool saveChanges = true, 
+        CancellationToken cancellationToken = default);
 }

@@ -1,5 +1,5 @@
 ﻿using YashilBozor.Domain.Entities.Notification;
-using YashilBozor.Service.Services.Notifications.Models;
+using YashilBozor.Service.Models;
 
 namespace YashilBozor.Service.Interfaces.Notifications.Services;
 

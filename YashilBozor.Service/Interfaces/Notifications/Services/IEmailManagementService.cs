@@ -2,7 +2,6 @@
 
 public interface IEmailManagementService
 {
-    ValueTask<bool> SendEmailAsync(Guid userId, Guid templateId);
-
-    ValueTask<bool> SendEmailAsync(Guid userId, string templateCategory);
+    ValueTask<bool> SendEmailAsync(string senderUserEmail, string receieverUserEmail, Guid templateId, string code = "");
+    ValueTask<bool> SendEmailAsync(string senderUserEmail, string receieverUserEmail, string templateCategory, string code="");
 }

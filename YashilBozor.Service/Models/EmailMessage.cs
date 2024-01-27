@@ -1,4 +1,4 @@
-﻿namespace YashilBozor.Service.Services.Notifications.Models;
+﻿namespace YashilBozor.Service.Models;
 
 public class EmailMessage
 {

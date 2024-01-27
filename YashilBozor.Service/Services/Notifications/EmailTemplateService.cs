@@ -3,20 +3,20 @@ using YashilBozor.DAL.IRepositories.Notifications;
 using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Service.Interfaces.Notifications.Services;
 
-namespace YashilBozor.Service.Services.Notifications.Services;
+namespace YashilBozor.Service.Services.Notifications;
 
 public class EmailTemplateService(IEmailTemplateRepository emailTemplateRepository) : IEmailTemplateService
 {
     public IQueryable<EmailTemplate> Get(
-        Expression<Func<EmailTemplate, bool>>? predicate = default, 
+        Expression<Func<EmailTemplate, bool>>? predicate = default,
         bool asNoTracking = false)
     {
         return emailTemplateRepository.SelectAll(predicate, asNoTracking);
     }
 
     public ValueTask<EmailTemplate?> GetByIdAsync(
-        Guid emailTemplateId, 
-        bool asNoTracking = false, 
+        Guid emailTemplateId,
+        bool asNoTracking = false,
         CancellationToken cancellationToken = default)
     {
         return emailTemplateRepository.SelectByIdAsync(emailTemplateId, asNoTracking, cancellationToken);

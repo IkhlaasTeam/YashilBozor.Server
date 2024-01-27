@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Service.Interfaces.Notifications.Services;
-using YashilBozor.Service.Services.Notifications.Models;
+using YashilBozor.Service.Models;
 
-namespace YashilBozor.Service.Services.Notifications.Services
+namespace YashilBozor.Service.Services.Notifications
 {
     public class EmailMessageService : IEmailMessageService
     {

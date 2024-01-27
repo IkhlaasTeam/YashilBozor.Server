@@ -3,7 +3,7 @@ using YashilBozor.DAL.IRepositories.Notifications;
 using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Service.Interfaces.Notifications.Services;
 
-namespace YashilBozor.Service.Services.Notifications.Services;
+namespace YashilBozor.Service.Services.Notifications;
 
 public class EmailService(IEmailRepository emailRepository) : IEmailService
 {
@@ -23,16 +23,16 @@ public class EmailService(IEmailRepository emailRepository) : IEmailService
     }
 
     public ValueTask<Email> CreateAsync(
-        Email email, 
-        bool saveChanges = true, 
+        Email email,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
         return emailRepository.InsertAsync(email, saveChanges, cancellationToken);
     }
 
     public ValueTask<Email> UpdateAsync(
-        Email email, 
-        bool saveChanges = true, 
+        Email email,
+        bool saveChanges = true,
         CancellationToken cancellationToken = default)
     {
         return emailRepository.UpdateAsync(email, saveChanges, cancellationToken);

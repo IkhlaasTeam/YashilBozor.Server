@@ -5,7 +5,7 @@ using YashilBozor.Service.Exceptions;
 using YashilBozor.Service.Interfaces.Identity;
 using YashilBozor.Service.Interfaces.Notifications.Services;
 
-namespace YashilBozor.Service.Services.Notifications.Services;
+namespace YashilBozor.Service.Services.Notifications;
 
 public class EmailPlaceholderService : IEmailPlaceholderService
 {
@@ -16,6 +16,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     private const string _email = "{{EmailAddress}}";
     private const string _date = "{{Date}}";
     private const string _companyName = "{{CompanyName}}";
+    private const string _code = "{{Code}}";
 
     public EmailPlaceholderService(IUserService userService)
     {
@@ -23,7 +24,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
     }
 
     public async ValueTask<(EmailTemplate, Dictionary<string, string>)> GetTemplateValues(Guid userId,
-        EmailTemplate template)
+        EmailTemplate template, string code = "")
     {
         var placeholders = GetPlaceholders(template.Body);
 
@@ -38,6 +39,7 @@ public class EmailPlaceholderService : IEmailPlaceholderService
                 _lastName => user.LastName,
                 _date => DateTime.Now.ToString("dd.MM.yyyy"),
                 _companyName => "Yashil bozor",
+                _code => code,
                 _ => throw new EvaluateException("Invalid placeholder")
             };
 

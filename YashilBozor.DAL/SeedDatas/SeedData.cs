@@ -1,4 +1,5 @@
 ﻿using YashilBozor.DAL.DbContexts;
+using YashilBozor.Domain.Entities.Notification;
 
 namespace YashilBozor.DAL.SeedDatas;
 
@@ -18,6 +19,20 @@ public static class SeedData
         await dbContext.Users.AddRangeAsync(users);
 
         return await dbContext.SaveChangesAsync();
+    }
+
+    private static async ValueTask AddEmailTemplatesAsync(this AppDbContext dbContext, int count)
+    {
+        var emailTemplates = new List<EmailTemplate>
+        {
+            new EmailTemplate("Welcome to our system", "Dear {{FullName}}, welcome to our system\n\nyour verification code is {{Code}}"),
+            new EmailTemplate("New Message", "Hello {{FullName}}, you've got a new message."),
+            new EmailTemplate("Truck Confirmation", "Dear {{FullName}}, your truck has been confirmed."),
+            new EmailTemplate("Thank You", "Dear {{FullName}}, thank you for using our services."),
+            new EmailTemplate("Your password has been changes", "Dear {{FullName}}, Your password has been changed."),
+        };
+
+        await dbContext.EmailTemplates.AddRangeAsync(emailTemplates.Take(count).ToList());
     }
 
 }
