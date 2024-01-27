@@ -31,11 +31,15 @@ public static partial class HostConfiguration
 
         //verification
         builder.Services
-            .Configure<VerificationSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+            .Configure<VerificationSettings>(builder.Configuration.GetSection(nameof(VerificationSettings)));
 
         //identity
         builder.Services
-            .Configure<JwtSettings>(builder.Configuration.GetSection(nameof(ValidationSettings)));
+            .Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+
+        //notification
+        builder.Services
+            .Configure<SmtpSettings>(builder.Configuration.GetSection(nameof(SmtpSettings)));
 
         return builder;
     }

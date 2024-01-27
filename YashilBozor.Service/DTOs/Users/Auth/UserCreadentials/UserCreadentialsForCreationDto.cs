@@ -1,6 +1,6 @@
-﻿namespace YashilBozor.Service.DTOs.Users.Auth.UserCredentials;
+﻿namespace YashilBozor.Service.DTOs.Users.Auth.UserCreadentials;
 
 public class UserCreadentialsForUpdateDto
 {
-     public string Password { get; set; }
+    public string Password { get; set; }
 }
