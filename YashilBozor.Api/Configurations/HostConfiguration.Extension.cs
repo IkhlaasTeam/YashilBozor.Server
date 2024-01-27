@@ -4,9 +4,19 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
+using YashilBozor.Api.Middlewares;
+using YashilBozor.Api.Models;
 using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.IRepositories.Categories;
+using YashilBozor.DAL.IRepositories.Commons;
+using YashilBozor.DAL.IRepositories.Users;
+using YashilBozor.DAL.Repositories.Categories;
+using YashilBozor.DAL.Repositories.Common;
+using YashilBozor.DAL.Repositories.Users;
 using YashilBozor.Service.Commons.Settings;
+using YashilBozor.Service.Interfaces.Categories;
 using YashilBozor.Service.Interfaces.Identity;
+using YashilBozor.Service.Services.Categories;
 using YashilBozor.Service.Services.Identity;
 
 namespace HHD.API.Configurations;
@@ -59,7 +69,19 @@ public static partial class HostConfiguration
         //Identity
         builder.Services
             .AddScoped<IPasswordHasherService, PasswordHasherService>();
-        
+
+        //Services
+        builder.Services
+            .AddScoped<ICategoryService, CategoryService>()
+            .AddScoped<IProductService, ProductService>();
+
+        //Reposiotories
+        builder.Services
+            .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+            .AddScoped<ICategoryRepository, CategoryRepository>()
+            .AddScoped<IProductService, ProductService>();
+
+
 
         return builder;
     }
@@ -116,7 +138,16 @@ public static partial class HostConfiguration
 
         return builder;
     }
+    private static WebApplicationBuilder AddConfigurationApiUrlName(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers(options =>
+        {
+            options.Conventions.Add(new RouteTokenTransformerConvention(
+                                                new ConfigurationApiUrlName()));
+        });
 
+        return builder;
+    }
     private static WebApplication UseExposers(this WebApplication app)
     {
         app.MapControllers();
@@ -132,9 +163,9 @@ public static partial class HostConfiguration
         return app;
     }
 
-    //private static WebApplication UseCustomMiddleWare(this WebApplication app)
-    //{
-    //    app.UseMiddleware<ExceptionHandlerMiddleWare>();
-    //    return app;
-    //}
+    private static WebApplication UseCustomMiddleWare(this WebApplication app)
+    {
+        app.UseMiddleware<ExceptionHandlerMiddleWare>();
+        return app;
+    }
 }

@@ -11,7 +11,8 @@ public static partial class HostConfiguration
             .AddBusinessLogic()
             .AddExposers()
             .AddCors()
-            .AddDevTools();
+            .AddDevTools()
+            .AddConfigurationApiUrlName();
 
         return new(builder);
     }
@@ -23,7 +24,7 @@ public static partial class HostConfiguration
         app
             .UseCors();
         app
-            //.UseCustomMiddleWare()
+            .UseCustomMiddleWare()
             .UseExposers()
             .UseDevTools();
         
