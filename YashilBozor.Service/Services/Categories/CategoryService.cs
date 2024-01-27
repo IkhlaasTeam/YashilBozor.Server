@@ -57,7 +57,7 @@ public class CategoryService(
         )
     {
         var dto = categoryRepository.SelectAll(category => category.Name == categoryForCreationDto.Name && category.DeletedAt == null);
-        if(dto is not null)
+        if(dto is null)
             throw new CustomException(409, "Category is already exist");
 
         var category = mapper.Map<Category>(categoryForCreationDto);

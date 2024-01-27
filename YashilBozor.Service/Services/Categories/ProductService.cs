@@ -24,7 +24,7 @@ public class ProductService
         CancellationToken cancellationToken = default)
     {
         var dto = productRepository.SelectAll(p => p.Name == productForCreationDto.Name && p.DeletedAt == null);
-        if (dto is not null)
+        if (dto is null)
             throw new CustomException(409, "Product is already exist");
 
         var product = mapper.Map<Product>(productForCreationDto);
@@ -40,6 +40,7 @@ public class ProductService
     public async ValueTask<ProductForResultDto> DeleteAsync
         (Guid productId,
         bool saveChanges = true,
+
         CancellationToken cancellationToken = default)
     {
         var dto = await productRepository.SelectByIdAsync(productId);
@@ -100,7 +101,7 @@ public class ProductService
             throw new ValidationException(validationResult.Errors);
 
         product.UpdatedAt = DateTime.UtcNow;
-
+           
         return mapper.Map<ProductForResultDto>
             (await productRepository.UpdateAsync
             (product, saveChanges, cancellationToken));
