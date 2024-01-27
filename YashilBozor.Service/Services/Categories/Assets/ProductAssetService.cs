@@ -24,11 +24,14 @@ public class ProductAssetService
     {
         var productImgPath = FileUploadHelper.UploadFile("Products", productAssetForCreationDto.FormFile).Result;
 
-        var mapped = mapper.Map<Asset>(productAssetForCreationDto);
-        mapped.MediaPath = productImgPath;
-        await productAssetRepository.InsertAsync(mapped);
+        var asset = new Asset();
+        asset.CreatedAt = DateTime.Now;
+        asset.MediaPath = productImgPath;
+        asset.ProductId = productAssetForCreationDto.ProductId;
 
-        return mapper.Map<ProductAssetForResultDto>(mapped);
+        var productAsset = await productAssetRepository.InsertAsync(asset);
+
+        return mapper.Map<ProductAssetForResultDto>(productAsset);
     }
 
     public async ValueTask<ProductAssetForResultDto> DeleteAsync
