@@ -1,4 +1,4 @@
-﻿namespace HHD.API.Configurations;
+﻿namespace YashilBozor.API.Configurations;
 
 public static partial class HostConfiguration
 {

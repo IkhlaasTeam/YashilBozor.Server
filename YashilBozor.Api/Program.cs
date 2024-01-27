@@ -1,4 +1,4 @@
-using HHD.API.Configurations;
+using YashilBozor.API.Configurations;
 using YashilBozor.Service.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);

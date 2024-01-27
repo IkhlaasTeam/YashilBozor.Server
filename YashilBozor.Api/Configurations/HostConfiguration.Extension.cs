@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -23,7 +22,7 @@ using YashilBozor.Service.Services.Categories;
 using YashilBozor.Service.Services.Categories.Assets;
 using YashilBozor.Service.Services.Identity;
 
-namespace HHD.API.Configurations;
+namespace YashilBozor.API.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -84,9 +83,8 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped(typeof(IRepository<>), typeof(Repository<>))
             .AddScoped<ICategoryRepository, CategoryRepository>()
-            .AddScoped<IProductService, ProductService>()
-            .AddScoped<IProductAssetRepository, ProductAssetRepository>()
-            .AddScoped<IProductRepository, ProductRepository>();
+            .AddScoped<IProductRepository, ProductRepository>()
+            .AddScoped<IProductAssetRepository, ProductAssetRepository>();
 
 
 
@@ -127,10 +125,21 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddDevTools(this WebApplicationBuilder builder)
     {
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(); // Comment or remove this line
+
+        //builder.Services.ConfigureSwaggerDocument(options =>
+        //{
+        //    options.SingleApiVersion(new Info
+        //    {
+        //        Version = "v1",
+        //        Title = "Blog Test Api",
+        //        Description = "A test API for this blogpost"
+        //    });
+        //});
 
         return builder;
     }
+
 
     private static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder)
     {
@@ -162,10 +171,10 @@ public static partial class HostConfiguration
         return app;
     }
 
-    private static WebApplication UseDevTools(this WebApplication app) 
+    private static WebApplication UseDevTools(this WebApplication app)
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+         app.UseSwagger(); // Comment or remove this line
+         app.UseSwaggerUI(); // Comment or remove this line
 
         return app;
     }
