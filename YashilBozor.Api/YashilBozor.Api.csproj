@@ -31,4 +31,8 @@
     <ProjectReference Include="..\YashilBozor.Service\YashilBozor.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Media\Products\" />
+  </ItemGroup>
+
 </Project>
