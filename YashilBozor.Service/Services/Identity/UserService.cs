@@ -4,7 +4,7 @@ using YashilBozor.DAL.IRepositories.Users;
 using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Service.Interfaces.Identity;
 
-namespace YashilBozor.Service.Services.Verifications;
+namespace YashilBozor.Service.Services.Identity;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {

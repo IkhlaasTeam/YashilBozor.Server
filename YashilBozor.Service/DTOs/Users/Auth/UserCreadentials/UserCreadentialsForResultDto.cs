@@ -1,4 +1,4 @@
-﻿namespace YashilBozor.Service.DTOs.Users.Auth.UserCredentials;
+﻿namespace YashilBozor.Service.DTOs.Users.Auth.UserCreadentials;
 
 public class UserCreadentialsForResultDto
 {
