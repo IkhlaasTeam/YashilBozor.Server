@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Asset> Assets { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Commentary> Commentaries { get; set; }
     public DbSet<AccessToken> AccessTokens { get; set; }
