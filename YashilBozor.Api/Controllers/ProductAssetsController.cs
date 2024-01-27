@@ -16,8 +16,10 @@ public class ProductAssetsController(IProductAssetService productAssetService) :
         return Ok(result);
     }
 
-    [HttpGet("{product-id}/{id:guid}")]
-    public async ValueTask<IActionResult> GetById([FromRoute(Name = "product-id")] Guid productId, [FromRoute] Guid id, CancellationToken cancellationToken)
+    [HttpGet("{product-id:guid}/{id:guid}")]
+    public async ValueTask<IActionResult> GetById([FromRoute(Name = "product-id")] Guid productId, 
+        [FromRoute] Guid id, 
+        CancellationToken cancellationToken)
     {
         var result = await productAssetService.GetByProductIdAsync(productId, id, cancellationToken: cancellationToken);
 
@@ -25,7 +27,7 @@ public class ProductAssetsController(IProductAssetService productAssetService) :
     }
 
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     public async ValueTask<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var result = await productAssetService.GetByIdAsync(id, cancellationToken: cancellationToken);
