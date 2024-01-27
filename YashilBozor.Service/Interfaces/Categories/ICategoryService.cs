@@ -10,23 +10,23 @@ public interface ICategoryService
         bool asNoTracking = false,
         CancellationToken cancellationToken = default);
 
-    ValueTask<CategoryForResultDto?> GetByIdAsync(
+    ValueTask<CategoryForResultDto> GetByIdAsync(
         Guid categoryId,
         bool asNoTracking = false,
         CancellationToken cancellationToken = default);
 
     ValueTask<CategoryForResultDto> CreateAsync(
-        CategoryForCreationDto userForCreationDto,
+        CategoryForCreationDto categoryForCreationDto,
         bool saveChanges = true,
         CancellationToken cancellationToken = default);
 
     ValueTask<CategoryForResultDto> UpdateAsync(
-        CategoryForUpdateDto userForUpdateDto,
+        CategoryForUpdateDto categoryForUpdateDto,
         Guid categoryId,
         bool saveChanges = true,
         CancellationToken cancellationToken = default);
 
-    ValueTask<CategoryForResultDto?> DeleteAsync(
+    ValueTask<CategoryForResultDto> DeleteAsync(
         Guid categoryId,
         bool saveChanges = true,
         CancellationToken cancellationToken = default);

@@ -37,7 +37,7 @@ public class ProductService
             .InsertAsync(product, saveChanges, cancellationToken));
     }
 
-    public async ValueTask<ProductForResultDto?> DeleteAsync
+    public async ValueTask<ProductForResultDto> DeleteAsync
         (Guid productId,
         bool saveChanges = true,
         CancellationToken cancellationToken = default)
@@ -66,7 +66,7 @@ public class ProductService
         return mapper.Map<IEnumerable<ProductForResultDto>>(products);
     }
 
-    public async ValueTask<ProductForResultDto?> GetByIdAsync
+    public async ValueTask<ProductForResultDto> GetByIdAsync
         (Guid productId,
         bool asNoTracking = false,
         CancellationToken cancellationToken = default)

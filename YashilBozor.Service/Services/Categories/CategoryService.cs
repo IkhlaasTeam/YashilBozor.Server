@@ -33,7 +33,7 @@ public class CategoryService(
         return mapper.Map<IEnumerable<CategoryForResultDto>>(categories);
     }
 
-    public async ValueTask<CategoryForResultDto?> GetByIdAsync(
+    public async ValueTask<CategoryForResultDto> GetByIdAsync(
         Guid categoryId,
         bool asNoTracking = false,
         CancellationToken cancellationToken = default
@@ -100,7 +100,7 @@ public class CategoryService(
             (category, saveChanges, cancellationToken));
     }
 
-    public async ValueTask<CategoryForResultDto?> DeleteAsync(
+    public async ValueTask<CategoryForResultDto> DeleteAsync(
         Guid categoryId,
         bool saveChanges = true,
         CancellationToken cancellationToken = default
