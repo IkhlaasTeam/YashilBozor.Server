@@ -7,8 +7,16 @@ using System.Reflection;
 using YashilBozor.Api.Middlewares;
 using YashilBozor.Api.Models;
 using YashilBozor.DAL.DbContexts;
+using YashilBozor.DAL.IRepositories.Categories;
+using YashilBozor.DAL.IRepositories.Commons;
+using YashilBozor.DAL.IRepositories.Users;
+using YashilBozor.DAL.Repositories.Categories;
+using YashilBozor.DAL.Repositories.Common;
+using YashilBozor.DAL.Repositories.Users;
 using YashilBozor.Service.Commons.Settings;
+using YashilBozor.Service.Interfaces.Categories;
 using YashilBozor.Service.Interfaces.Identity;
+using YashilBozor.Service.Services.Categories;
 using YashilBozor.Service.Services.Identity;
 
 namespace HHD.API.Configurations;
@@ -57,7 +65,17 @@ public static partial class HostConfiguration
         //Identity
         builder.Services
             .AddScoped<IPasswordHasherService, PasswordHasherService>();
-        
+
+        //Services
+        builder.Services
+            .AddScoped<ICategoryService, CategoryService>();
+
+        //Reposiotories
+        builder.Services
+            .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+            .AddScoped<ICategoryRepository, CategoryRepository>();
+
+
 
         return builder;
     }
