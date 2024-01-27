@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YashilBozor.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class added_entities : Migration
+    public partial class AddedAsset : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,7 @@ namespace YashilBozor.DAL.Migrations
                     LastName = table.Column<string>(type: "text", nullable: false),
                     EmailAddress = table.Column<string>(type: "text", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    IsEmailAddressVerified = table.Column<bool>(type: "boolean", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -197,6 +198,28 @@ namespace YashilBozor.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Assets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MediaPath = table.Column<string>(type: "text", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assets_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Commentaries",
                 columns: table => new
                 {
@@ -262,6 +285,11 @@ namespace YashilBozor.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assets_ProductId",
+                table: "Assets",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Commentaries_ProductId",
                 table: "Commentaries",
                 column: "ProductId");
@@ -317,6 +345,9 @@ namespace YashilBozor.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AccessTokens");
+
+            migrationBuilder.DropTable(
+                name: "Assets");
 
             migrationBuilder.DropTable(
                 name: "Commentaries");

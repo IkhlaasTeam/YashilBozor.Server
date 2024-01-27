@@ -22,6 +22,35 @@ namespace YashilBozor.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Asset", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MediaPath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Assets");
+                });
+
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -299,7 +328,7 @@ namespace YashilBozor.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCredentials", b =>
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCreadentials", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,6 +418,17 @@ namespace YashilBozor.DAL.Migrations
                     b.HasDiscriminator().HasValue("UserInfoVerificationCode");
                 });
 
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Asset", b =>
+                {
+                    b.HasOne("YashilBozor.Domain.Entities.Categories.Product", "Product")
+                        .WithMany("Categories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Commentary", b =>
                 {
                     b.HasOne("YashilBozor.Domain.Entities.Categories.Product", "Product")
@@ -476,7 +516,7 @@ namespace YashilBozor.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCredentials", b =>
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCreadentials", b =>
                 {
                     b.HasOne("YashilBozor.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -505,6 +545,8 @@ namespace YashilBozor.DAL.Migrations
 
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Product", b =>
                 {
+                    b.Navigation("Categories");
+
                     b.Navigation("Commentaries");
                 });
 
