@@ -1,5 +1,4 @@
 ﻿using YashilBozor.Service.DTOs.Categories.Orders;
-using YashilBozor.Service.DTOs.Users.Auth.UserRoles;
 
 namespace YashilBozor.Service.DTOs.Users;
 
@@ -12,6 +11,5 @@ public class UserForResultDto
     public string PhoneNumber { get; set; }
     public Guid RoleId { get; set; }
 
-    public IEnumerable<UserRoleForResultDto> UserRoles { get; set; }
     public IEnumerable<OrderForResultDto> Orders { get; set; }
 }

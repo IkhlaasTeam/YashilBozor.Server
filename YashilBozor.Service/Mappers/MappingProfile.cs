@@ -3,6 +3,7 @@ using YashilBozor.Domain.Entities.Categories;
 using YashilBozor.Domain.Entities.Notification;
 using YashilBozor.Domain.Entities.Users;
 using YashilBozor.Service.DTOs.Categories;
+using YashilBozor.Service.DTOs.Categories.Assets.ProductAssets;
 using YashilBozor.Service.DTOs.Categories.Products;
 using YashilBozor.Service.DTOs.Users;
 using YashilBozor.Service.Models;
@@ -29,5 +30,9 @@ public class MappingProfile : Profile
         CreateMap<Product, ProductForResultDto>().ReverseMap();
         CreateMap<Product, ProductForUpdateDto>().ReverseMap();
         CreateMap<Product, ProductForCreationDto>().ReverseMap();
+
+        //Product Assets
+        CreateMap<Asset, ProductAssetForCreationDto>().ReverseMap();
+        CreateMap<Asset, ProductAssetForResultDto>().ReverseMap();
     }
 }

@@ -10,6 +10,9 @@ public static class SeedData
         if (!dbContext.Users.Any())
             await dbContext.AddUsers(10);
 
+        if (!dbContext.EmailTemplates.Any())
+            await dbContext.AddEmailTemplatesAsync();
+
     }
 
     public static async ValueTask<int> AddUsers(this AppDbContext dbContext, int count)
@@ -21,8 +24,9 @@ public static class SeedData
         return await dbContext.SaveChangesAsync();
     }
 
-    private static async ValueTask AddEmailTemplatesAsync(this AppDbContext dbContext, int count)
+    private static async ValueTask<int> AddEmailTemplatesAsync(this AppDbContext dbContext)
     {
+        Console.WriteLine("template lar qo'shildi");
         var emailTemplates = new List<EmailTemplate>
         {
             new EmailTemplate("Welcome to our system", "Dear {{FullName}}, welcome to our system\n\nyour verification code is {{Code}}"),
@@ -32,7 +36,9 @@ public static class SeedData
             new EmailTemplate("Your password has been changes", "Dear {{FullName}}, Your password has been changed."),
         };
 
-        await dbContext.EmailTemplates.AddRangeAsync(emailTemplates.Take(count).ToList());
+        await dbContext.EmailTemplates.AddRangeAsync(emailTemplates);
+
+        return await dbContext.SaveChangesAsync();
     }
 
 }

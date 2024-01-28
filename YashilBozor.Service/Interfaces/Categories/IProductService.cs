@@ -5,7 +5,7 @@ namespace YashilBozor.Service.Interfaces.Categories;
 
 public interface IProductService
 {
-    ValueTask<IEnumerable<ProductForResultDto>> GetAllAsync(
+    ValueTask<IEnumerable<ProductForResultDto>?> GetAllAsync(
        PaginationParams @params,
        bool asNoTracking = false,
        CancellationToken cancellationToken = default);
