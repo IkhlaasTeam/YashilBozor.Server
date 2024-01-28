@@ -8,13 +8,13 @@ using YashilBozor.Service.Services.Identity;
 
 namespace YashilBozor.Api.Controllers;
 
-public class AuthController(IAuthAggregationService authAggregationService, IUserService userService) : BaseController
+public class AuthController(IAuthAggregationService authAggregationService, IUserService userService, IAccountAggregatorService accountAggregatorService) : BaseController
 {
     [HttpPost("sign-up")]
-    public async ValueTask<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails, [FromQuery]string code, CancellationToken cancellationToken)
+    public async ValueTask<IActionResult> SignUp([FromBody] SignUpDetails signUpDetails,CancellationToken cancellationToken)
     {
-        var result = await authAggregationService.SignUpAsync(signUpDetails, code, cancellationToken);
-        return result ? Ok() : BadRequest();
+        var result = await authAggregationService.SignUpAsync(signUpDetails, cancellationToken);
+        return Ok(result);
     }
 
     [HttpPost("sign-in")]
@@ -24,8 +24,14 @@ public class AuthController(IAuthAggregationService authAggregationService, IUse
         return result is not null ? Ok() : BadRequest();
     }
 
+    [HttpPost("verify/{code}/{userId:guid}")]
+    public async ValueTask<IActionResult> VerifyEmailAddress([FromRoute] string code, [FromRoute] Guid userId, CancellationToken cancellationToken)
+    {
+        var result = await accountAggregatorService.VerifyEmail(code, userId, cancellationToken);
+        return result ? Ok() : BadRequest();
+    }
 
-    [HttpGet]
+    [HttpGet("users")]
     public async ValueTask<IActionResult> Get([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         var result = await userService.GetAllAsync(@params, cancellationToken: cancellationToken);
@@ -33,7 +39,7 @@ public class AuthController(IAuthAggregationService authAggregationService, IUse
         return Ok(result);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("users/{id:guid}")]
     public async ValueTask<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var result = await userService.GetByIdAsync(id, cancellationToken: cancellationToken);
@@ -41,7 +47,7 @@ public class AuthController(IAuthAggregationService authAggregationService, IUse
         return Ok(result);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("users/{id:guid}")]
     public async ValueTask<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UserForUpdateDto userForUpdateDto, CancellationToken cancellationToken)
     {
         var result = await userService.UpdateAsync(userForUpdateDto, id, cancellationToken: cancellationToken);
@@ -49,7 +55,7 @@ public class AuthController(IAuthAggregationService authAggregationService, IUse
         return Ok(result);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("users/{id:guid}")]
     public async ValueTask<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var result = await userService.DeleteAsync(id, cancellationToken: cancellationToken);

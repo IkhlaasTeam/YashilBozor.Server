@@ -1,6 +1,5 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,19 +11,24 @@ using YashilBozor.Api.Models;
 using YashilBozor.DAL.DbContexts;
 using YashilBozor.DAL.IRepositories.Categories;
 using YashilBozor.DAL.IRepositories.Commons;
+using YashilBozor.DAL.IRepositories.Notifications;
 using YashilBozor.DAL.IRepositories.Users;
 using YashilBozor.DAL.Repositories.Categories;
 using YashilBozor.DAL.Repositories.Common;
+using YashilBozor.DAL.Repositories.Notifications;
 using YashilBozor.DAL.Repositories.Users;
+using YashilBozor.DAL.SeedDatas;
 using YashilBozor.Service.Commons.Settings;
 using YashilBozor.Service.Interfaces.Categories;
 using YashilBozor.Service.Interfaces.Identity;
 using YashilBozor.Service.Interfaces.Notifications.Services;
+using YashilBozor.Service.Interfaces.Verifications;
 using YashilBozor.Service.Services.Categories;
 using YashilBozor.Service.Services.Identity;
 using YashilBozor.Service.Services.Notifications;
+using YashilBozor.Service.Services.Verifications;
 
-namespace HHD.API.Configurations;
+namespace YashilBozor.API.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -99,27 +103,38 @@ public static partial class HostConfiguration
         builder.Services
             .AddScoped<ICategoryService, CategoryService>()
             .AddScoped<IProductService, ProductService>()
-            .AddScoped<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IEmailTemplateService, EmailTemplateService>()
+             .AddTransient<IAccessTokenGeneratorService, AccessTokenGeneratorService>()
             .AddScoped<IAccessTokenService, AccessTokenService>()
             .AddScoped<IAccountAggregatorService, AccountAggregatorService>()
             .AddScoped<IAuthAggregationService, AuthAggregationService>()
-            .AddScoped<IPasswordHasherService, PasswordHasherService>()
+            .AddTransient<IPasswordHasherService, PasswordHasherService>()
             .AddScoped<IUserCreadentialsService, UserCreadentialsService>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<IEmailManagementService, EmailManagementService>()
             .AddScoped<IEmailPlaceholderService, EmailPlaceholderService>()
-            .AddScoped <IEmailTemplateService, EmailTemplateService>();
+            .AddScoped<IEmailMessageService, EmailMessageService>()
+            .AddScoped<IUserInfoVerificationCodeService, UserInfoVerificationCodeService>()
+            .AddScoped<IEmailSenderService, EmailSenderService>()
+            .AddScoped<IVerificationProcessingService, VerificationProcessingService>();
 
         //Reposiotories
         builder.Services
             .AddScoped(typeof(IRepository<>), typeof(Repository<>))
             .AddScoped<ICategoryRepository, CategoryRepository>()
-            .AddScoped<IProductService, ProductService>()
-            .AddScoped<IEmailService, EmailService>()
-            .AddScoped<IEmailTemplateService, EmailTemplateService>()
             .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserInfoVerificationCodeRepository, UserInfoVerificationCodeRepository>();
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IEmailRepository, EmailRepository>()
+            .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
+            .AddScoped<IUserInfoVerificationCodeRepository, UserInfoVerificationCodeRepository>()
+            .AddScoped<IUserCredentialsRepository, UserCreadentialsRepository>()
+            .AddScoped<IProductRepository, ProductRepository>();
+
 
 
 
@@ -160,10 +175,21 @@ public static partial class HostConfiguration
     private static WebApplicationBuilder AddDevTools(this WebApplicationBuilder builder)
     {
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(); // Comment or remove this line
+
+        //builder.Services.ConfigureSwaggerDocument(options =>
+        //{
+        //    options.SingleApiVersion(new Info
+        //    {
+        //        Version = "v1",
+        //        Title = "Blog Test Api",
+        //        Description = "A test API for this blogpost"
+        //    });
+        //});
 
         return builder;
     }
+
 
     private static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder)
     {
@@ -188,6 +214,13 @@ public static partial class HostConfiguration
 
         return builder;
     }
+
+    private static async ValueTask<WebApplication> UseSeedData(this WebApplication app)
+    {
+        await app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>().InitializeSeedData();
+        return app;
+    }
+
     private static WebApplication UseExposers(this WebApplication app)
     {
         app.MapControllers();
@@ -195,10 +228,10 @@ public static partial class HostConfiguration
         return app;
     }
 
-    private static WebApplication UseDevTools(this WebApplication app) 
+    private static WebApplication UseDevTools(this WebApplication app)
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+         app.UseSwagger(); // Comment or remove this line
+         app.UseSwaggerUI(); // Comment or remove this line
 
         return app;
     }

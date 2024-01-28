@@ -1,4 +1,4 @@
-﻿namespace HHD.API.Configurations;
+﻿namespace YashilBozor.API.Configurations;
 
 public static partial class HostConfiguration
 {
@@ -20,6 +20,7 @@ public static partial class HostConfiguration
     public static async ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
     {
         //await app.MigrateDatabaseAsync();
+        await app.UseSeedData();
 
         app
             .UseCors();
