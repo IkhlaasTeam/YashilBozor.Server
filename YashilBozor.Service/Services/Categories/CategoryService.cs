@@ -33,7 +33,7 @@ public class CategoryService(
         return mapper.Map<IEnumerable<CategoryForResultDto>>(categories);
     }
 
-    public async ValueTask<CategoryForResultDto?> GetByIdAsync(
+    public async ValueTask<CategoryForResultDto> GetByIdAsync(
         Guid categoryId,
         bool asNoTracking = false,
         CancellationToken cancellationToken = default
@@ -57,7 +57,7 @@ public class CategoryService(
         )
     {
         var dto = categoryRepository.SelectAll(category => category.Name == categoryForCreationDto.Name && category.DeletedAt == null);
-        if(dto is not null)
+        if(dto is null)
             throw new CustomException(409, "Category is already exist");
 
         var category = mapper.Map<Category>(categoryForCreationDto);
@@ -100,7 +100,7 @@ public class CategoryService(
             (category, saveChanges, cancellationToken));
     }
 
-    public async ValueTask<CategoryForResultDto?> DeleteAsync(
+    public async ValueTask<CategoryForResultDto> DeleteAsync(
         Guid categoryId,
         bool saveChanges = true,
         CancellationToken cancellationToken = default

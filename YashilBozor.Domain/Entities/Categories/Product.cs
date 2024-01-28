@@ -1,4 +1,5 @@
-﻿using YashilBozor.Domain.Entities.Commons;
+﻿using System.Text.Json.Serialization;
+using YashilBozor.Domain.Entities.Commons;
 using YashilBozor.Domain.Entities.Users;
 
 namespace YashilBozor.Domain.Entities.Categories;
@@ -19,5 +20,7 @@ public class Product : Auditable
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<Commentary> Commentaries { get; set; }
+    public IEnumerable<Asset> Categories { get;}
 }

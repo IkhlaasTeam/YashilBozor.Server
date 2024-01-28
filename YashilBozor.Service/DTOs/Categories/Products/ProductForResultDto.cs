@@ -1,4 +1,5 @@
-﻿using YashilBozor.Service.DTOs.Categories.Commentaries;
+﻿using YashilBozor.Service.DTOs.Categories.Assets.ProductAssets;
+using YashilBozor.Service.DTOs.Categories.Commentaries;
 
 namespace YashilBozor.Service.DTOs.Categories.Products;
 
@@ -16,4 +17,5 @@ public class ProductForResultDto
     public Guid SellerId { get; set; }
 
     public IEnumerable<CommentaryForResultDto> Commentaries { get; set; }
+    public IEnumerable<ProductAssetForResultDto> ProductAssets { get; set; }
 }

@@ -12,8 +12,8 @@ using YashilBozor.DAL.DbContexts;
 namespace YashilBozor.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240126191933_added_entities")]
-    partial class added_entities
+    [Migration("20240127234746_entities")]
+    partial class entities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,35 @@ namespace YashilBozor.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Asset", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MediaPath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Assets");
+                });
 
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Category", b =>
                 {
@@ -175,6 +204,76 @@ namespace YashilBozor.DAL.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Notification.Email", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ReceiverAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenderAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("SentTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
+                });
+
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Notification.EmailTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailTemplates");
+                });
+
             modelBuilder.Entity("YashilBozor.Domain.Entities.Users.AccessToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -210,59 +309,6 @@ namespace YashilBozor.DAL.Migrations
                     b.ToTable("AccessTokens");
                 });
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.Auth.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("RoleType")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.Auth.UserRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRoles");
-                });
-
             modelBuilder.Entity("YashilBozor.Domain.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -291,6 +337,9 @@ namespace YashilBozor.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("RoleType")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -299,7 +348,7 @@ namespace YashilBozor.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCredentials", b =>
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCreadentials", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,6 +438,17 @@ namespace YashilBozor.DAL.Migrations
                     b.HasDiscriminator().HasValue("UserInfoVerificationCode");
                 });
 
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Asset", b =>
+                {
+                    b.HasOne("YashilBozor.Domain.Entities.Categories.Product", "Product")
+                        .WithMany("Categories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Commentary", b =>
                 {
                     b.HasOne("YashilBozor.Domain.Entities.Categories.Product", "Product")
@@ -457,26 +517,7 @@ namespace YashilBozor.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.Auth.UserRole", b =>
-                {
-                    b.HasOne("YashilBozor.Domain.Entities.Users.Auth.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YashilBozor.Domain.Entities.Users.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCredentials", b =>
+            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.UserCreadentials", b =>
                 {
                     b.HasOne("YashilBozor.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -505,19 +546,14 @@ namespace YashilBozor.DAL.Migrations
 
             modelBuilder.Entity("YashilBozor.Domain.Entities.Categories.Product", b =>
                 {
-                    b.Navigation("Commentaries");
-                });
+                    b.Navigation("Categories");
 
-            modelBuilder.Entity("YashilBozor.Domain.Entities.Users.Auth.Role", b =>
-                {
-                    b.Navigation("UserRoles");
+                    b.Navigation("Commentaries");
                 });
 
             modelBuilder.Entity("YashilBozor.Domain.Entities.Users.User", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }
