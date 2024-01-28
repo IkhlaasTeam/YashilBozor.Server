@@ -57,7 +57,9 @@ public class EmailManagementService : IEmailManagementService
 
     public async ValueTask<bool> SendEmailAsync(string senderUserEmail, string receieverUserEmail, string templateCategory, string code = "")
     {
-        var template = _emailTemplateService.Get(getTemplate => getTemplate.Subject.Equals(templateCategory)).FirstOrDefault() ?? throw new InvalidOperationException();
+        var template = _emailTemplateService.Get(getTemplate => getTemplate.Subject.Equals(templateCategory)).FirstOrDefault();//?? throw new InvalidOperationException();
+
+        Console.WriteLine(template is null);
 
         var userId = await _userService.GetIdByEmailAddressAsync(receieverUserEmail) ?? throw new CustomException(400, "User not found");
 

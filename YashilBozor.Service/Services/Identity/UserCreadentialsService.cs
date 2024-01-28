@@ -15,12 +15,12 @@ public class UserCreadentialsService(IUserCredentialsRepository userCredentialsR
 
     public IQueryable<UserCreadentials> Get(Expression<Func<UserCreadentials, bool>>? predicate = null, bool asNoTracking = false)
     {
-        throw new NotImplementedException();
+       return userCredentialsRepository.SelectAll(predicate, asNoTracking);
     }
 
-    public ValueTask<UserCreadentials?> GetByUserIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    public async ValueTask<UserCreadentials?> GetByUserIdAsync(Guid userId, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await userCredentialsRepository.SelectAll(c => c.UserId == userId).FirstOrDefaultAsync(cancellationToken);
     }
 
     public ValueTask<UserCreadentials> UpdateAsync(UserCreadentials userCreadentials, bool saveChanges = true, CancellationToken cancellationToken = default)

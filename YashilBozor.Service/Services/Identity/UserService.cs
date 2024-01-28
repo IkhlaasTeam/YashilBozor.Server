@@ -36,7 +36,7 @@ public class UserService(IUserRepository userRepository, IValidator<User> userVa
 
     public async Task<Guid?> GetIdByEmailAddressAsync(string emailAddress, CancellationToken cancellationToken = default)
     {
-        var userId = await userRepository.SelectAll(user => user.EmailAddress.Equals(emailAddress)).Select(user => user.Id).FirstOrDefaultAsync(cancellationToken);
+        var userId = await userRepository.SelectAll(user => user.EmailAddress.Equals(emailAddress) && user.DeletedAt == null).Select(user => user.Id).FirstOrDefaultAsync(cancellationToken);
         return userId != Guid.Empty ? userId : default(Guid?);
     }
 
