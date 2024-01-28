@@ -4,5 +4,7 @@ namespace YashilBozor.Service.Interfaces.Identity;
 
 public interface IAccountAggregatorService
 {
-    ValueTask<bool> CreateUserAsync(User user, UserCreadentials userCreadentials, string code, CancellationToken cancellationToken = default);
+    ValueTask<string> CreateUserAsync(User user, UserCreadentials userCreadentials, CancellationToken cancellationToken = default);
+
+    ValueTask<bool> VerifyEmail(string code, Guid userId, CancellationToken cancellationToken);
 }

@@ -17,7 +17,7 @@ public class AccountAggregatorService(
     IOptions<SmtpSettings> options
 ) : IAccountAggregatorService
 {
-    public async ValueTask<bool> CreateUserAsync(User user, UserCreadentials userCreadentials, string code, CancellationToken cancellationToken = default)
+    public async ValueTask<string> CreateUserAsync(User user, UserCreadentials userCreadentials,CancellationToken cancellationToken = default)
     {
         var createdUser = await userService.CreateAsync(user, cancellationToken: cancellationToken);
 
@@ -32,6 +32,17 @@ public class AccountAggregatorService(
 
         await emailManagementService.SendEmailAsync(options.Value.EmailAddress, createdUser.EmailAddress, "Welcome to our system", verificationCode.Code);
 
-        return code.Equals(verificationCode.Code) && await verificationProcessingService.Verify(code, cancellationToken);
+        return verificationCode.Code;
+    }
+
+    public async ValueTask<bool> VerifyEmail(string code, Guid userId, CancellationToken cancellationToken)
+    {
+        var isaVerified = userInfoVerificationCodeService.GetAll(verification => verification.UserId == userId).FirstOrDefault()
+            .Code.Equals(code) 
+            && await verificationProcessingService.Verify(code, cancellationToken);
+
+        if (!isaVerified)
+            await userService.DeleteAsync(userId, cancellationToken: cancellationToken);
+        return isaVerified;
     }
 }

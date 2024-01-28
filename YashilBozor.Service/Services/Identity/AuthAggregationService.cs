@@ -17,7 +17,7 @@ public class AuthAggregationService(
     IUserCreadentialsService userCreadentialsService
 ) : IAuthAggregationService
 {
-    public async ValueTask<bool> SignUpAsync(SignUpDetails signUpDetails, string code, CancellationToken cancellationToken = default)
+    public async ValueTask<string> SignUpAsync(SignUpDetails signUpDetails, CancellationToken cancellationToken = default)
     {
         var foundUserId = await userService.GetIdByEmailAddressAsync(signUpDetails.EmailAddress, cancellationToken);
 
@@ -32,7 +32,7 @@ public class AuthAggregationService(
             Password = passwordHasherService.HashPassword(signUpDetails.Password),
         };
 
-        return await accountAggregatorService.CreateUserAsync(user, userCreadentials, code, cancellationToken);
+        return await accountAggregatorService.CreateUserAsync(user, userCreadentials, cancellationToken);
     }
 
     public async ValueTask<string> SignInAsync(SignInDetails signInDetails, CancellationToken cancellation = default)
