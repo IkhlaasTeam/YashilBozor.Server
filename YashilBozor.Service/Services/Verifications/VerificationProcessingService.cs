@@ -14,11 +14,12 @@ public class VerificationProcessingService(
         var codeType = await userInfoVerificationCodeService.GetVerificationTypeAsync(code, cancellationToken) ??
                        throw new InvalidOperationException("Verification code is not found.");
 
-        var result = codeType switch
-        {
-            VerificationType.UserInfoVerificationCode => VerifyUserInfoAsync(code, cancellationToken),
-            _ => throw new NotSupportedException("Verification type is not supported.")
-        };
+        //var result = codeType switch
+        //{
+        //    VerificationType.UserInfoVerificationCode => VerifyUserInfoAsync(code, cancellationToken) ,
+        //   // _ => throw new NotSupportedException("Verification type is not supported.")
+        //};
+        var result = VerifyUserInfoAsync(code, cancellationToken);
 
         return await result;
     }

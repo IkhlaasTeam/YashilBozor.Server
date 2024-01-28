@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq.Expressions;
+using System.Security.Cryptography;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -12,12 +13,13 @@ namespace YashilBozor.Service.Services.Verifications;
 
 public class UserInfoVerificationCodeService(
     IOptions<VerificationSettings> verificationSettings,
-    IValidator<UserInfoVerificationCode> userInfoVerificationCodeValidator,
     IUserInfoVerificationCodeRepository userInfoVerificationCodeRepository
 ) : IUserInfoVerificationCodeService
 {
     private readonly VerificationSettings _verificationSettings = verificationSettings.Value;
 
+    public IQueryable<UserInfoVerificationCode> GetAll(Expression<Func<UserInfoVerificationCode, bool>> predicate) =>
+        userInfoVerificationCodeRepository.SelectAll(predicate);
     public IList<string> Generate()
     {
         var codes = new List<string>();
@@ -78,9 +80,6 @@ public class UserInfoVerificationCodeService(
             VerificationLink = $"{_verificationSettings.VerificationLink}/{verificationCodeValue}",
             ExpiryTime = DateTimeOffset.UtcNow.AddSeconds(_verificationSettings.VerificationCodeExpiryTimeInSeconds)
         };
-
-        var validationResult = userInfoVerificationCodeValidator.Validate(verificationCode);
-        if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);
 
         await userInfoVerificationCodeRepository.InsertAsync(verificationCode, cancellationToken: cancellationToken);
 
